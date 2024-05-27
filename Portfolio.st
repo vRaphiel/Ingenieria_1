@@ -305,14 +305,48 @@ test07AccountKnowsItsTransactions
 ! !
 
 
-!classDefinition: #ReportTests category: 'Portfolio'!
-TestCase subclass: #ReportTests
+!classDefinition: #ReportPortfolioTests category: 'Portfolio'!
+TestCase subclass: #ReportPortfolioTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio'!
 
-!ReportTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 15:30:24'!
+!ReportPortfolioTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 18:52:12'!
+test01PortfolioCreated
+	| johnsAccount angiesAccount friendsPortfolio printed |
+	
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	friendsPortfolio := Portfolio named: 'Portfolio de amigos' with: johnsAccount with: angiesAccount.
+	
+	printed := OrderedCollection
+		with: 'Portfolio de amigos'
+		with: (OrderedCollection with: 'Cuenta de Juan' with: (OrderedCollection with: 'Balance = 0'))
+		with: (OrderedCollection with: 'Cuenta de Angeles' with: (OrderedCollection with: 'Balance = 0')).
+		
+	self assert: printed equals: friendsPortfolio accountSummary.! !
+
+!ReportPortfolioTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 16:42:36'!
+testXXFinalPortfolioCreated
+	| johnsAccount angiesAccount childrenPortfolio myAccount familyPortfolio |
+	
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+	myAccount := ReceptiveAccount named: 'Cuenta mia'.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: 	myAccount with: childrenPortfolio.
+! !
+
+
+!classDefinition: #ReportReceptiveAccountTests category: 'Portfolio'!
+TestCase subclass: #ReportReceptiveAccountTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio'!
+
+!ReportReceptiveAccountTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 15:30:24'!
 test01ReportOfNewAccount
 	"Hago un deposito en la cuenta emisora y uno en la cuenta receptora"
 	| account |
@@ -321,7 +355,7 @@ test01ReportOfNewAccount
 	
 	self assert: (OrderedCollection with: 'Balance = 0') equals: account accountSummary.! !
 
-!ReportTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:37:13'!
+!ReportReceptiveAccountTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:37:13'!
 test02ReportOfAccountWithOneDeposit
 	"Hago un deposito en la cuenta emisora y uno en la cuenta receptora"
 	| account |
@@ -331,7 +365,7 @@ test02ReportOfAccountWithOneDeposit
 	
 	self assert: (OrderedCollection with: 'Depósito por 50' with: 'Balance = 50') equals: account accountSummary.! !
 
-!ReportTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 15:49:16'!
+!ReportReceptiveAccountTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 15:49:16'!
 test03ReportOfAccountWithOneDepositAndOneWithdraw
 	"Hago un deposito en la cuenta emisora y uno en la cuenta receptora"
 	| account |
@@ -342,7 +376,7 @@ test03ReportOfAccountWithOneDepositAndOneWithdraw
 	
 	self assert: (OrderedCollection with: 'Depósito por 50' with: 'Extracción por 20' with: 'Balance = 30') equals: account accountSummary.! !
 
-!ReportTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 15:49:50'!
+!ReportReceptiveAccountTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 15:49:50'!
 test04ReportOfAccountWithDifferentDepositAndWithdraw
 	"Hago un deposito en la cuenta emisora y uno en la cuenta receptora"
 	| account |
@@ -353,7 +387,7 @@ test04ReportOfAccountWithDifferentDepositAndWithdraw
 	
 	self assert: (OrderedCollection with: 'Depósito por 50' with: 'Extracción por 10' with: 'Balance = 40') equals: account accountSummary.! !
 
-!ReportTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 16:30:08'!
+!ReportReceptiveAccountTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 16:30:08'!
 test05TransfernetOfNewAccount
 	"Hago un deposito en la cuenta emisora y uno en la cuenta receptora"
 	| account |
@@ -362,7 +396,7 @@ test05TransfernetOfNewAccount
 	
 	self assert: 0 equals: account transferNet.! !
 
-!ReportTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 16:30:11'!
+!ReportReceptiveAccountTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 16:30:11'!
 test06TransfernetOfAccountWithDepositAndWithdraw
 	"Hago un deposito en la cuenta emisora y uno en la cuenta receptora"
 	| account |
@@ -373,7 +407,7 @@ test06TransfernetOfAccountWithDepositAndWithdraw
 	
 	self assert: 50 equals: account transferNet.! !
 
-!ReportTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 16:30:14'!
+!ReportReceptiveAccountTests methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 16:30:14'!
 test07TransfernetOfAccountTransfernetOfTwoDeposit
 	"Hago un deposito en la cuenta emisora y uno en la cuenta receptora"
 	| account |
@@ -450,7 +484,7 @@ test04AnAccountKnownsTheirTransfers
 
 !classDefinition: #Account category: 'Portfolio'!
 Object subclass: #Account
-	instanceVariableNames: 'customerName'
+	instanceVariableNames: 'accountName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio'!
@@ -488,6 +522,10 @@ addedTo: aPortfolio
 
 	self subclassResponsibility ! !
 
+
+!Account methodsFor: 'getter' stamp: 'RPH 5/26/2024 18:32:46'!
+accountName
+	^accountName.! !
 
 !Account methodsFor: 'getter' stamp: 'RPH 5/23/2024 15:13:20'!
 accountSummary
@@ -542,9 +580,17 @@ rootParents
 	^ rootParents! !
 
 
-!Portfolio methodsFor: 'initialization' stamp: 'HAW 5/25/2019 12:03:18'!
+!Portfolio methodsFor: 'initialization' stamp: 'RPH 5/26/2024 18:32:46'!
 initialize
+	
+	accountName := ''.
+	accounts := OrderedCollection new.
+	parents := OrderedCollection new.! !
 
+!Portfolio methodsFor: 'initialization' stamp: 'RPH 5/26/2024 18:32:46'!
+initializeWithACustomerName: aCustomerName.
+	
+	accountName := aCustomerName.
 	accounts := OrderedCollection new.
 	parents := OrderedCollection new.! !
 
@@ -612,12 +658,21 @@ signalCanNotAddAccount
 	self error: self class canNotAddAccountErrorMessage! !
 
 
-!Portfolio methodsFor: 'getter' stamp: 'RPH 5/23/2024 16:01:15'!
+!Portfolio methodsFor: 'getter' stamp: 'RPH 5/26/2024 18:36:41'!
 accountSummary
-	| reports |
-	reports := OrderedCollection new.
+
+	| reports sumary |
+	
+	reports := OrderedCollection with: accountName.
+	
 	accounts do: [ :anAccount | 
-		reports add: anAccount accountSummary.	
+		sumary := OrderedCollection with: anAccount accountName with: anAccount accountSummary.
+		reports add: sumary.	
+	].
+
+	parents do: [ :anAccount | 
+		sumary := OrderedCollection with: anAccount accountName with: anAccount accountSummary.
+		reports add: sumary.	
 	].
 
 	^ reports.! !
@@ -637,20 +692,40 @@ canNotAddAccountErrorMessage
 	
 	^'Can not add repeated account to a portfolio'! !
 
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'HAW 5/25/2019 11:18:21'!
-with: anAccount
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 16:38:39'!
+named: aCustomerName with: anAccount
 
-	^self new 
+	^self new initializeWithACustomerName: aCustomerName;
 		add: anAccount;
 		yourself! !
 
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'HAW 5/25/2019 11:23:59'!
-with: anAccount with: anotherAccount
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 16:38:47'!
+named: aCustomerName with: anAccount with: anotherAccount
 
-	^self new 
+	^self new initializeWithACustomerName: aCustomerName;
 		add: anAccount;
 		add: anotherAccount;
 		yourself! !
+
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 16:38:26'!
+with: anAccount
+	^ self named: '' with: anAccount.
+"
+	^self new 
+		add: anAccount;
+		yourself
+"! !
+
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 16:38:30'!
+with: anAccount with: anotherAccount
+
+	^ self named: '' with: anAccount with: anotherAccount.
+"
+	^self new 
+		add: anAccount;
+		add: anotherAccount;
+		yourself
+"! !
 
 
 !classDefinition: #ReceptiveAccount category: 'Portfolio'!
@@ -660,10 +735,18 @@ Account subclass: #ReceptiveAccount
 	poolDictionaries: ''
 	category: 'Portfolio'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:35'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'RPH 5/26/2024 18:32:46'!
 initialize
 
 	super initialize.
+	accountName := ''.
+	transactions := OrderedCollection new.! !
+
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'RPH 5/26/2024 18:32:46'!
+initializeWithACustomerName: aCustomerName
+
+	super initialize.
+	accountName := aCustomerName.
 	transactions := OrderedCollection new.! !
 
 
@@ -710,10 +793,10 @@ addedTo: aPortfolio
 	! !
 
 
-!ReceptiveAccount methodsFor: 'getter' stamp: 'RPH 5/23/2024 23:35:32'!
+!ReceptiveAccount methodsFor: 'getter' stamp: 'RPH 5/26/2024 18:33:21'!
 accountSummary
 	| report |
-	report := XXXX new.
+	report := AccountReportBuilder new.
 	
 	transactions do: [ :aTransaction | 
 		aTransaction lineOfReport: report.
@@ -724,16 +807,122 @@ accountSummary
 	^report report.
 	! !
 
-!ReceptiveAccount methodsFor: 'getter' stamp: 'RPH 5/23/2024 23:42:41'!
+!ReceptiveAccount methodsFor: 'getter' stamp: 'RPH 5/26/2024 18:27:54'!
 transferNet
 	| transfernet |
-	transfernet := YYYY new.
+	transfernet := AccountTransfernetBuilder new.
 
 	transactions do: [ :aTransaction | 
 		aTransaction calculate: transfernet.
 	].
 	
 	^ transfernet report.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ReceptiveAccount class' category: 'Portfolio'!
+ReceptiveAccount class
+	instanceVariableNames: ''!
+
+!ReceptiveAccount class methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 16:15:33'!
+named: aCustomerName
+	^ self new initializeWithACustomerName: aCustomerName.! !
+
+
+!classDefinition: #AccountReportTransfernerBuilder category: 'Portfolio'!
+Object subclass: #AccountReportTransfernerBuilder
+	instanceVariableNames: 'updateValue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio'!
+
+!AccountReportTransfernerBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:07'!
+balance: aBalance
+	self subclassResponsibility.! !
+
+!AccountReportTransfernerBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:40'!
+operationOverDeposit: aDeposit
+	self subclassResponsibility.! !
+
+!AccountReportTransfernerBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:44'!
+operationOverDepositLeg: aDepositLeg
+	self subclassResponsibility.! !
+
+!AccountReportTransfernerBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:34'!
+operationOverWithdraw: aWithdraw
+	self subclassResponsibility.! !
+
+!AccountReportTransfernerBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:03'!
+operationOverWithdrawLeg: aWithdrawLeg
+	self subclassResponsibility.! !
+
+!AccountReportTransfernerBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 18:34:08'!
+report
+	^updateValue ! !
+
+
+!classDefinition: #AccountReportBuilder category: 'Portfolio'!
+AccountReportTransfernerBuilder subclass: #AccountReportBuilder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio'!
+
+!AccountReportBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:16'!
+balance: aBalance
+	updateValue add: 'Balance = ', aBalance asString.! !
+
+!AccountReportBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/26/2024 18:30:23'!
+initialize
+	updateValue := OrderedCollection new.! !
+
+!AccountReportBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:23'!
+operationOverDeposit: aDeposit
+	updateValue add: 'Depósito por ', aDeposit value asString.! !
+
+!AccountReportBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:53'!
+operationOverDepositLeg: aDepositLeg
+	updateValue add: 'Salida por transferencia de ', aDepositLeg value asString.! !
+
+!AccountReportBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:50'!
+operationOverWithdraw: aWithdraw
+	updateValue add: 'Extracción por ', aWithdraw value asString.! !
+
+!AccountReportBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:55:37'!
+operationOverWithdrawLeg: aWithdrawLeg
+	updateValue add: 'Entrada por transferencia de ', aWithdrawLeg value asString.! !
+
+
+!classDefinition: #AccountTransfernetBuilder category: 'Portfolio'!
+AccountReportTransfernerBuilder subclass: #AccountTransfernetBuilder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio'!
+
+!AccountTransfernetBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:40:47'!
+balance: aBalance
+	^ deposit.! !
+
+!AccountTransfernetBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:55'!
+initialize
+	updateValue := 0.! !
+
+!AccountTransfernetBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:31'!
+operationOverDeposit: aDeposit
+	updateValue := updateValue + aDeposit value.! !
+
+!AccountTransfernetBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:04'!
+operationOverDepositLeg: aDepositLeg
+	updateValue := updateValue + aDepositLeg value.! !
+
+!AccountTransfernetBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:57'!
+operationOverWithdraw: aWithdraw
+	updateValue := updateValue - aWithdraw value.! !
+
+!AccountTransfernetBuilder methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:13'!
+operationOverWithdrawLeg: aWithdrawLeg
+	updateValue := updateValue - aWithdrawLeg value.! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio'!
@@ -1047,99 +1236,3 @@ Transfer class
 betweenASender: aSenderAccount andAReceptor: aReceptorAccount withAQuantity: aMoneyQuantity
 	^self new initializeBetweenASender: aSenderAccount andAReceptor: aReceptorAccount withAQuantityOf: aMoneyQuantity.
 ! !
-
-
-!classDefinition: #WWWW category: 'Portfolio'!
-Object subclass: #WWWW
-	instanceVariableNames: 'updateValue'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio'!
-
-!WWWW methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:07'!
-balance: aBalance
-	self subclassResponsibility.! !
-
-!WWWW methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:40'!
-operationOverDeposit: aDeposit
-	self subclassResponsibility.! !
-
-!WWWW methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:44'!
-operationOverDepositLeg: aDepositLeg
-	self subclassResponsibility.! !
-
-!WWWW methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:34'!
-operationOverWithdraw: aWithdraw
-	self subclassResponsibility.! !
-
-!WWWW methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:03'!
-operationOverWithdrawLeg: aWithdrawLeg
-	self subclassResponsibility.! !
-
-!WWWW methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:35'!
-report
-	^updateValue.! !
-
-
-!classDefinition: #XXXX category: 'Portfolio'!
-WWWW subclass: #XXXX
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio'!
-
-!XXXX methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:16'!
-balance: aBalance
-	updateValue add: 'Balance = ', aBalance asString.! !
-
-!XXXX methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:51'!
-initialize
-	updateValue := OrderedCollection new.! !
-
-!XXXX methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:23'!
-operationOverDeposit: aDeposit
-	updateValue add: 'Depósito por ', aDeposit value asString.! !
-
-!XXXX methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:53'!
-operationOverDepositLeg: aDepositLeg
-	updateValue add: 'Salida por transferencia de ', aDepositLeg value asString.! !
-
-!XXXX methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:50'!
-operationOverWithdraw: aWithdraw
-	updateValue add: 'Extracción por ', aWithdraw value asString.! !
-
-!XXXX methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:55:37'!
-operationOverWithdrawLeg: aWithdrawLeg
-	updateValue add: 'Entrada por transferencia de ', aWithdrawLeg value asString.! !
-
-
-!classDefinition: #YYYY category: 'Portfolio'!
-WWWW subclass: #YYYY
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio'!
-
-!YYYY methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:40:47'!
-balance: aBalance
-	^ deposit.! !
-
-!YYYY methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:51:55'!
-initialize
-	updateValue := 0.! !
-
-!YYYY methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:31'!
-operationOverDeposit: aDeposit
-	updateValue := updateValue + aDeposit value.! !
-
-!YYYY methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:04'!
-operationOverDepositLeg: aDepositLeg
-	updateValue := updateValue + aDepositLeg value.! !
-
-!YYYY methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:57:57'!
-operationOverWithdraw: aWithdraw
-	updateValue := updateValue - aWithdraw value.! !
-
-!YYYY methodsFor: 'as yet unclassified' stamp: 'RPH 5/23/2024 23:56:13'!
-operationOverWithdrawLeg: aWithdrawLeg
-	updateValue := updateValue - aWithdrawLeg value.! !
