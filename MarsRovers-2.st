@@ -285,13 +285,6 @@ at: aPosition heading: aCardinalPoint
 	
 	^self new initializeAt: aPosition heading: newHeading.! !
 
-!MarsRovers class methodsFor: 'instance creation' stamp: 'RPH 6/24/2024 22:03:02'!
-forHeadingAt: aCardinalPoint leftIs: leftCardinalPoint rightIs: rightCardinalPoint
-
-	(headings at: aCardinalPoint) leftHeading: (headings at: leftCardinalPoint ) rightHeading: (headings at: rightCardinalPoint ).
-	
-	! !
-
 !MarsRovers class methodsFor: 'instance creation' stamp: 'RPH 6/24/2024 00:42:44'!
 headingFor: aCardinalPoint
 
@@ -304,7 +297,7 @@ initialize
 
 	self initializeHeadings! !
 
-!MarsRovers class methodsFor: 'instance creation' stamp: 'RPH 6/24/2024 22:03:51'!
+!MarsRovers class methodsFor: 'instance creation' stamp: 'RPH 6/24/2024 21:57:47'!
 initializeHeadings
 
 	headings := Dictionary new.
@@ -318,11 +311,10 @@ initializeHeadings
 		do: [: heading | headings at: heading cardinalPoint put: heading].
 			
 
-	self
-		forHeadingAt: 'N' leftIs: 'W' rightIs: 'E';
-		forHeadingAt: 'S' leftIs: 'E' rightIs: 'W';
-		forHeadingAt: 'E' leftIs: 'N' rightIs: 'S';
-		forHeadingAt: 'W' leftIs: 'S' rightIs: 'N'.! !
+	(headings at: 'N') leftHeading: (headings at: 'W') rightHeading: (headings at: 'E').
+	(headings at: 'S') leftHeading: (headings at: 'E') rightHeading: (headings at: 'W').
+	(headings at: 'E') leftHeading: (headings at: 'N') rightHeading: (headings at: 'S').
+	(headings at: 'W') leftHeading: (headings at: 'S') rightHeading: (headings at: 'N').! !
 
 !MarsRovers class methodsFor: 'instance creation' stamp: 'RPH 6/24/2024 00:42:55'!
 invalidCardinalPointErrorDescription
